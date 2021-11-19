@@ -1,35 +1,41 @@
-import Jetson.GPIO as GPIO
+import unittest
+from pwm_control import PWM
 import time
 
 
-# Set Pi to use pin number when referencing GPIO pins.
-# Can use GPIO.setmode(GPIO.BCM) instead to use
-# Broadcom SOC channel names.
-GPIO.setmode(GPIO.BOARD)
-# Set GPIO pin 12 to output mode.
-GPIO.setup(32, GPIO.OUT)
-# Initialize PWM on pwmPin 100Hz frequency
-pwm = GPIO.PWM(32, 100)
+class TestModules(unittest.TestCase):
 
-# main loop of program
-print("\nPress Ctl C to quit \n")  # Print blank line before and after message.
-# set dc variable to 0 for 0%
-dc=0
-# Start PWM with 0% duty cycle
-pwm.start(dc)
+    def test_servo(self):
+        print('Testing Servo for stearing')
+        servo_pin = 32
+        servo = PWM(pin=servo_pin)
+        servo.start()
+        servo.angle(-45)
+        servo.cleanPWM()
 
-try:
-  while True:                      # Loop until Ctl C is pressed to stop.
-    for dc in range(0, 101, 5):    # Loop 0 to 100 stepping dc by 5 each loop
-      pwm.ChangeDutyCycle(dc)
-      time.sleep(0.5)             # wait .05 seconds at current LED brightness
-      print(dc)
-    for dc in range(95, 0, -5):    # Loop 95 to 5 stepping dc down by 5 each loop
-      pwm.ChangeDutyCycle(dc)
-      time.sleep(0.5)             # wait .05 seconds at current LED brightness
-      print(dc)
-except KeyboardInterrupt:
-  print("Ctl C pressed - ending program")
+    def test_brushless_motor(self):
+      print('Testing Brushless Motor')
+      motor_pin = 33
+      motor = PWM(pin=motor_pin, hz=50, min_duty_cycle=0, max_duty_cycle=100)
+      motor.start()
+      time.sleep(10)
+      motor.setDutyCycle(3)
+      time.sleep(10)
+      for percentage in range(3, 1000, 1):
+        print(percentage * .1)
+        motor.setDutyCycle(percentage * .1)
 
-pwm.stop()                         # stop PWM
-GPIO.cleanup()                     # resets GPIO ports used back to input mode
+
+
+
+
+
+
+
+
+
+
+if __name__ == '__main__':
+    test_rc = TestModules()
+    # test_rc.test_servo()
+    test_rc.test_brushless_motor()

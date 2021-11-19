@@ -1,12 +1,8 @@
-from servo import Servo
+from pwm_control import PWM
 
 
 def main():
-  servo_pin = 32
-  servo = Servo(pin=servo_pin)
-  servo.start()
-  servo.angle(0)
-  servo.cleanPWM()
+  pass
 
 
 
