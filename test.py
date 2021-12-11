@@ -1,6 +1,7 @@
 import unittest
 from pwm_control import PWM
 import time
+import Jetson.GPIO as GPIO
 
 
 class TestModules(unittest.TestCase):
@@ -9,21 +10,43 @@ class TestModules(unittest.TestCase):
         print('Testing Servo for stearing')
         servo_pin = 32
         servo = PWM(pin=servo_pin)
-        servo.start()
+        servo.start(0, 0.05)
         servo.angle(-45)
         servo.cleanPWM()
 
     def test_brushless_motor(self):
       print('Testing Brushless Motor')
       motor_pin = 33
-      motor = PWM(pin=motor_pin, hz=50, min_duty_cycle=0, max_duty_cycle=100)
-      motor.start()
-      time.sleep(10)
-      motor.setDutyCycle(3)
-      time.sleep(10)
-      for percentage in range(3, 1000, 1):
-        print(percentage * .1)
-        motor.setDutyCycle(percentage * .1)
+      motor = PWM(motor_pin, min_duty_cycle=1, max_duty_cycle=10)
+      motor.start(0, 2)
+      for x in range(1, 100):
+        print(x)
+        motor.percentage(x)
+
+      for x in reversed(range(1, 100)):
+        print(x)
+        motor.percentage(x)
+
+    def test_manual_values_esc(self):
+      print('Testing Brushless Motor')
+      motor_pin = 33
+      hz = 100
+      motor = PWM(motor_pin, hz=hz, min_duty_cycle=1, max_duty_cycle=10)
+      motor.start(1)
+      motor.setManualValues()
+
+    def test_auto_calibrate(self):
+      motor_pin = 33
+      hz = 100
+      motor = PWM(motor_pin, hz=hz, min_duty_cycle=1, max_duty_cycle=10)
+      motor.start(1)
+      motor.autoCalibrate()
+
+
+
+
+
+
 
 
 
@@ -38,4 +61,6 @@ class TestModules(unittest.TestCase):
 if __name__ == '__main__':
     test_rc = TestModules()
     # test_rc.test_servo()
-    test_rc.test_brushless_motor()
+    # test_rc.test_brushless_motor()
+    # test_rc.test_manual_values_esc()
+    test_rc.test_auto_calibrate()
