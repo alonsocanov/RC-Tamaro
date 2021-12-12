@@ -28,27 +28,27 @@ class Keyboard:
         return key_pressed
 
     def arrow_control(self):
+        'settin kwys depending on imaginary circle'
         data = None
         if self.get_multiple_keys(['RIGHT', 'UP']):
-            data = '1,20,100'
+            data = [1,1]
         elif self.get_multiple_keys(['LEFT', 'UP']):
-            data = '1,-20,100'
+            data = [1,-1]
         elif self.get_multiple_keys(['LEFT', 'DOWN']):
-            data = '-1,-20,100'
+            data = [-1,-1]
         elif self.get_multiple_keys(['RIGHT', 'DOWN']):
-            data = '-1,20,100'
+            data = [-1,1]
         elif self.get_key('UP'):
-            data = '1,0,100'
+            data = [1,0]
         elif self.get_key('DOWN'):
-            data = '-1,0,100'
+            data = [-1,0]
         elif self.get_key('RIGHT'):
-            data = '1,90,100'
+            data = [0,1]
         elif self.get_key('LEFT'):
-            data = '1,-90,100'
+            data = [0, -1]
         return data
 
     def key_q(self):
-
         return self.get_key('q')
 
     def user_input(self):

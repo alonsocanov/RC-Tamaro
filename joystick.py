@@ -18,7 +18,6 @@ class Joystick:
         self.axiss = [0., 0., 0., 0., 0., 0.]
 
     def getJS(self, name=''):
-
         for event in pygame.event.get():
             if event.type == pygame.JOYAXISMOTION:
                 self.axiss[event.axis] = round(event.value, 2)
@@ -32,11 +31,11 @@ class Joystick:
                     if x < 10:
                         if event.button == x:
                             self.button[key] = 0
-
-        self.button['axis1'] = self.axiss[0]
-        self.button['axis2'] = self.axiss[1]
-        self.button['axis3'] = self.axiss[2]
-        self.button['axis4'] = self.axiss[3]
+        ''' up/down axis1/axis2 1/-1, left/right axis3/axis4 -1/1'''
+        self.button['axis1'] = self.axiss[0] * -1
+        self.button['axis2'] = self.axiss[1] * -1
+        self.button['axis3'] = self.axiss[2] * -1
+        self.button['axis4'] = self.axiss[3] * -1
 
         if not name:
             return self.button
