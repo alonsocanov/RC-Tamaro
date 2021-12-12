@@ -9,7 +9,7 @@ class Joystick:
             self.controller = pygame.joystick.Joystick(0)
             self.controller.init()
         except pygame.error as error:
-            print('Joystick not connected')
+            print('Joystick not connected...')
             print(error)
             sys.exit(1)
 
