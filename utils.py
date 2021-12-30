@@ -42,7 +42,6 @@ def create_dir(dir_name: str, file: str = None):
     dir_path = os.path.join(current_path, dir_name)
     if not os.path.isdir(dir_path):
         try:
-            # print(dir_path)
             os.mkdir(dir_path)
         except OSError:
             description = 'Creation of the directory failed:'
