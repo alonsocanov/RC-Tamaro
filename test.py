@@ -56,17 +56,21 @@ class TestModules(unittest.TestCase):
 
 
 
-    def test_joysick_input(self):
-        joystick = Joystick()
-        key_q = False
-        t = time.time()
-        while not key_q:
-            key_q = joystick.getJS('R2')
-            data_1 = joystick.getJS('axis2')
-            data_2 = joystick.getJS('axis1')
-            data = [data_1, data_2]
-            if data_1 != 0 or data_2 != 0:
-                print(data)
+
+    def test_servo_with_joystick(self):
+      joystick = Joystick()
+      key_q = False
+      servo_pin = 32
+      servo = PWM(pin=servo_pin)
+      servo.start(0, 0.05)
+      while not key_q:
+          key_q = joystick.getJS('R2')
+          left = joystick.getJS('axis3') * 45
+          right = joystick.getJS('axis4') * 45
+          if left:
+            servo.angle(left)
+          elif right:
+            servo.angle(right)
 
 
 
