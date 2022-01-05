@@ -17,7 +17,9 @@ class Joystick:
                        'R2': 0, 'axis1': 0., 'axis2': 0., 'axis3': 0., 'axis4': 0.}
         self.axis = [0., 0., 0., 0., 0., 0.]
 
-    def getJS(self, name=''):
+    def getJS(self, name=[]):
+        if isinstance(name, str):
+            name = [name]
         for event in pygame.event.get():
             if event.type == pygame.JOYAXISMOTION:
                 self.axis[event.axis] = round(event.value, 2)
@@ -40,4 +42,11 @@ class Joystick:
         if not name:
             return self.button
         else:
-            return self.button[name]
+            data = []
+            for val in name:
+                if val in self.button:
+                    data.append(self.button[val])
+                else:
+                    print('Warning:', val, 'does not exist in joystic dictionary, setting to 0')
+                    data.append(0)
+            return data

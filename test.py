@@ -54,10 +54,13 @@ class TestModules(unittest.TestCase):
           if data:
             print(data)
 
+    def test_motors_with_joystick(self):
+      motor_pin = 33
+      hz = 100
+      motor = PWM(motor_pin, hz=hz, min_duty_cycle=1, max_duty_cycle=10)
+      motor.start(1)
+      motor.autoCalibrate()
 
-
-
-    def test_servo_with_joystick(self):
       joystick = Joystick()
       key_q = False
       servo_pin = 32
@@ -65,23 +68,15 @@ class TestModules(unittest.TestCase):
       servo.start(0, 0.05)
       while not key_q:
           key_q = joystick.getJS('R2')
-          left = joystick.getJS('axis3') * 45
-          right = joystick.getJS('axis4') * 45
+          up, down, left, right  = joystick.getJS(['axis1', 'axis2', 'axis3', 'axis4'])
           if left:
-            servo.angle(left)
+            servo.angle(left * 45)
           elif right:
-            servo.angle(right)
-
-
-
-
-
-
-
-
-
-
-
+            servo.angle(right * 45)
+          if up:
+            motor.percentge(50)
+          elif up:
+            motor.percentge(0)
 
 
 if __name__ == '__main__':
@@ -91,4 +86,5 @@ if __name__ == '__main__':
     # test_rc.test_manual_values_esc()
     # test_rc.test_auto_calibrate()
     # test_rc.test_keyboard_input()
-    test_rc.test_joysick_input()
+    # test_rc.test_joysick_input()
+    test_rc.test_motors_with_joystick()
