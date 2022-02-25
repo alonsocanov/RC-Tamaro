@@ -3,6 +3,8 @@ from pwm_control import PWM
 import Jetson.GPIO as GPIO
 from keyboard import Keyboard
 from joystick import Joystick
+from i2c import I2C
+from system_data import get_ip_address
 import time
 
 
@@ -78,6 +80,12 @@ class TestModules(unittest.TestCase):
           elif up:
             motor.percentge(0)
 
+    def test_oled(self):
+      text = get_ip_address('wlan0')
+      oled = I2C()
+      oled.set_display()
+      oled.draw_display(text, (1, 1))
+
 
 if __name__ == '__main__':
     test_rc = TestModules()
@@ -87,4 +95,5 @@ if __name__ == '__main__':
     # test_rc.test_auto_calibrate()
     # test_rc.test_keyboard_input()
     # test_rc.test_joysick_input()
-    test_rc.test_motors_with_joystick()
+    # test_rc.test_motors_with_joystick()
+    test_rc.test_oled()

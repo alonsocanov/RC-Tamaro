@@ -9,9 +9,6 @@ beena a request loop
 '''
 
 
-# Import all board pins.
-from board import SCL, SDA
-import busio
 import time
 # Pillow library for image manipulation
 from PIL import Image
