@@ -3,10 +3,10 @@ from PIL import Image, ImageDraw, ImageFont
 from board import SCL, SDA
 import busio
 import subprocess
-# Import the SSD1306 module.
+# Import the SSD1306 module
 import adafruit_ssd1306
-# library for needed functions
-#from oled_display.utils import get_ip_address, get_gpu_usage
+# Import the mpu6050 module
+import adafruit_mpu6050
 
 class I2C:
     def __init__(self):
@@ -74,3 +74,15 @@ class I2C:
         self.__display.image(self.__image)
         # display image
         self.__display.show()
+
+    def set_imu(self):
+        self.__mpu = adafruit_mpu6050.MPU6050(self.__i2c)
+
+    def get_accleration(self):
+        return self.__mpu.acceleration
+
+    def get_gyro(self):
+        return self.__mpu.gyro
+
+    def get_temperature(self):
+        return self.__mpu.temperature

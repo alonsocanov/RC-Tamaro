@@ -81,7 +81,7 @@ class TestModules(unittest.TestCase):
             motor.percentge(0)
 
     def test_oled(self):
-      text = get_ip_address('wlan0')
+      text = get_ip_address('eth0')
       oled = I2C()
       oled.set_display()
       oled.draw_display(text, (1, 1))
