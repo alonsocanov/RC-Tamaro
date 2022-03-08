@@ -5,6 +5,7 @@ from keyboard import Keyboard
 from joystick import Joystick
 from i2c import I2C
 from system_data import get_ip_address
+from pid import Pid
 import time
 
 
@@ -83,8 +84,18 @@ class TestModules(unittest.TestCase):
     def test_oled(self):
       text = get_ip_address('eth0')
       oled = I2C()
-      oled.set_display()
+      oled.set_display(0x3c)
       oled.draw_display(text, (1, 1))
+
+    def test_pid(self):
+      pid = Pid(k_p=2.0, k_i=0.0, k_d=0.0, direction=1)
+      pid.addOutputOffset(50.0)
+      pid.updateTime = 100
+      pid.setOutputLimits(0, 100)
+
+      while(True):
+          output = pid.compute(50, 23)
+          print(output)
 
 
 if __name__ == '__main__':
@@ -96,4 +107,5 @@ if __name__ == '__main__':
     # test_rc.test_keyboard_input()
     # test_rc.test_joysick_input()
     # test_rc.test_motors_with_joystick()
-    test_rc.test_oled()
+    # test_rc.test_oled()
+    test_rc.test_pid()
