@@ -11,9 +11,11 @@ class PWM:
         self.pwm = None
         self.min_duty_cycle = min_duty_cycle
         self.max_duty_cycle = max_duty_cycle
+        GPIO.cleanup()
 
 
     def start(self, duty_cycle=0, sleep=0.05):
+
         GPIO.setwarnings(False)
         # Set Jetson to use pin number when referencing GPIO pins.
         # Can use GPIO.setmode(GPIO.BCM) instead to use Broadcom SOC channel names.
