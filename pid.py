@@ -1,6 +1,7 @@
 import time
 
-class Pid:
+
+class PID:
     def __init__(self, k_p, k_i, k_d, direction=1) -> None:
         self.k_p = k_p
         self.k_i = k_i
@@ -18,7 +19,6 @@ class Pid:
         self.lower_ouput_limit = 0
         self.upper_output_limit = 0
         self.output_offset = 0
-
 
     def set_integral_limits(self, lower_limit, upper_limit):
         self.lower_integral_limit = lower_limit

@@ -13,7 +13,6 @@ class PWM:
         self.max_duty_cycle = max_duty_cycle
         GPIO.cleanup()
 
-
     def start(self, duty_cycle=0, sleep=0.05):
 
         GPIO.setwarnings(False)
@@ -44,7 +43,7 @@ class PWM:
         duty_cycle = (angle * m) + self.min_duty_cycle + offset
         return duty_cycle
 
-    def percentageToDutyCycle(self, percentage:float)-> float:
+    def percentageToDutyCycle(self, percentage: float) -> float:
         difference = self.max_duty_cycle - self.min_duty_cycle
         # wheel max angle
         liberty_percentage = 100.
@@ -59,10 +58,8 @@ class PWM:
         duty_cycle = (percentage * m) + self.min_duty_cycle
         return duty_cycle
 
-
     def setDutyCycle(self, value):
         self.pwm.ChangeDutyCycle(value)
-
 
     def angle(self, angle, sleep=0.05):
         # duty cycle conversion
@@ -76,13 +73,11 @@ class PWM:
         self.pwm.ChangeDutyCycle(duty_cycle)
         time.sleep(sleep)
 
-
     def cleanPWM(self):
         # stop PWM
         self.pwm.stop()
         # resets GPIO ports used back to input mode
         GPIO.cleanup()
-
 
     def setManualValues(self):
         """
@@ -104,7 +99,6 @@ class PWM:
 
         print("End maual setup")
 
-
     def autoCalibrate(self):
         """
         To calibrate before connecting the ESC and enter 99 then connect ESC, wait for beeps and then enter 1 and whait for beeps, then disconnect. Once disconnected reconnect and set any value between [1;100] and the ESC should be calibrated
@@ -114,6 +108,5 @@ class PWM:
 
         self.percentage(1, 3)
         self.percentage(50, 10)
-
 
         print("End of calibration")
